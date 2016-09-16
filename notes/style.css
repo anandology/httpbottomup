@@ -1,0 +1,24 @@
+html {
+	background-color: #F3E9D2;	
+}
+
+body {
+	margin: 0px auto;
+	width: 900px;
+	background-color: #F3E9D2;
+	color: #114B5F;
+}
+
+pre {
+	background: #BEDFB6;
+	padding: 20px;
+}
+
+code {
+	background-color: inherit;
+}
+
+ul {
+	padding-left: 2em;
+	list-style-type: disc;
+}
