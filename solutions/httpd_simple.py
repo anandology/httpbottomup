@@ -24,9 +24,7 @@ def handle_request(sock, remote_addr):
     method, path, protocol = status_line.strip().split()
 
     # Path starts with /. Remove that to make a path in the file system
-    path = path.lstrip("/")
-    if not path:
-        path = "."
+    filepath = "." + path
 
     status = "200 OK"
     headers = [
@@ -37,15 +35,15 @@ def handle_request(sock, remote_addr):
     body = b""
 
 
-    if not os.path.exists(path):
+    if not os.path.exists(filepath):
         status = "404 Not Found"
-    elif os.path.isdir(path) and not path.endswith("/"):
+    elif os.path.isdir(filepath) and not filepath.endswith("/"):
         status = '302 Found'
         headers.append('Location: {}/'.format(path))
-    elif os.path.isdir(path):
-        body = list_directory(path).encode('ascii')
+    elif os.path.isdir(filepath):
+        body = list_directory(filepath).encode('ascii')
     else:
-        body = open(path, 'rb').read()
+        body = open(filepath, 'rb').read()
 
     headers.append("Content-Length: {}".format(len(body)))
 
