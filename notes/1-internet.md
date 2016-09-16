@@ -1,4 +1,5 @@
 # The Internet
+[&larr; Back](.)
 
 ## Finding IP address of a host
 
