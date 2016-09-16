@@ -2,6 +2,8 @@
 
 Notes for the [HTTP Bottom Up][0] workshop.
 
+Git Repo: <https://github.com/anandology/httpbottomup>
+
 
 ## Table of Contents
 

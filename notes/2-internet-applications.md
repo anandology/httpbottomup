@@ -32,10 +32,3 @@ Whatever we send or receive from a socket is always bytes. We need to encode/dec
 	$ python echo_client.py http00.pipal.in
 	Hello Socket
 
-TODO: write a UDP client
-
-## Writing Network Servers
-
-TODO:
-* write echo server using TCP
-* write echo server using UDP
