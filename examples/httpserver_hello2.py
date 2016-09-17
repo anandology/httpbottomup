@@ -1,4 +1,4 @@
-"""Hello World HTTP Server, written using pure sockets.
+"""Hello World HTTP Server.
 """
 import httpserver
 

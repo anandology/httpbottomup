@@ -20,31 +20,30 @@ def http_server(host, port):
             handle_request(client, addr)
 
 def read_request(sock):
-    method, path = read_status_line()
-    headers = read_headers()
+    fileobj = sock.makefile('r')
+    method, path = read_status_line(fileobj)
+    headers = read_headers(fileobj)
     return method, path, headers
 
-def read_status_line(sock):
+def read_status_line(fileobj):
     line = fileobj.readline()
     method, path, protocol = line.strip().split()
     return method, path
 
-def read_headers(sock):
+def read_headers(fileobj):
     # assuming there won't be any duplicate headers, storing them in a dictionary
     headers = {}
     while True:
-        line = sock.readline().strip()
+        line = fileobj.readline().strip()
         if not line:
             break
-        name, value = line.split(":")
+        name, value = line.split(":", 1)
         headers[name.strip().lower()] = value.strip()
     return headers
 
 def handle_request(sock, remote_addr):
-    fileobj = sock.makefile('r')
 
-    status_line = fileobj.readline()
-    method, path, request_headers = read_request()
+    method, path, request_headers = read_request(sock)
 
     status = "200 OK"
     headers = [
@@ -57,8 +56,7 @@ def handle_request(sock, remote_addr):
     headers.append("Content-Length: {}".format(len(body)))
 
     sock.send(b"HTTP/1.1 " + status.encode('ascii') + CRLF)
-    header_items = ["{}: {}".format(k, v) for k, v in headers)
-    header_bytes = b"".join(h.encode('ascii') + CRLF for h in header_items)
+    header_bytes = b"".join(h.encode('ascii') + CRLF for h in headers)
     sock.send(header_bytes)
     sock.send(CRLF)
     sock.send(body)
