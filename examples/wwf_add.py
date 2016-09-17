@@ -1,22 +1,27 @@
 """WSGI ADD server.
 """
+import wwf
 
-from wwf import application, set_mapping
+def render_home():
+    return open("../data/add.html").read()
 
-def render_home(request):
-    return [b'A form will come here']
-
-def render_add(request):
-    q = request.query
+def render_add():
+    q = wwf.query()
+    if 'x' not in q or 'y' not in q:
+        wwf.set_status("404 Bad Data")
+        return "Bad Data"
     x = int(q['x'])
     y = int(q['y'])
     z = x+y
+    wwf.add_header("Content-type", "text/plain")
     msg = "Result is {}".format(z)
-    return [msg.encode('ascii')]
+    return msg
 
 urls = [
     ("/", render_home),
     ("/add", render_add)
 ]
-set_mapping(urls)
+wwf.set_mapping(urls)
+
+application = wwf.application
 
