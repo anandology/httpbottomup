@@ -97,8 +97,19 @@ Improve the hello program further to take an optional query parameter repeats, w
 
 ## Exercise 2.4
 
-Change the http server that servers static files. The filenames with .html extension should be rendered as HTML, with .jpg or .png extension should be rendered as images and everything else as text.
+Improve the httpserver to serve static files to provide directory listing.
 
+---
+
+## Exercise 2.5
+
+Improve the WSGI hello program to take the name of the person to greet from the URL.
+
+    $ curl http://localhost:8000/alice
+    Hello alice!
+
+    $ curl http://localhost:8000/bob
+    Hello bob!
 
 ---
 ## Code Examples for this workshop
