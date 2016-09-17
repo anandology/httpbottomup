@@ -3,11 +3,16 @@
 
 from wwf import application, set_mapping
 
-def render_home():
+def render_home(request):
     return [b'A form will come here']
 
-def render_add():
-    return [b'The result is 42']
+def render_add(request):
+    q = request.query
+    x = int(q['x'])
+    y = int(q['y'])
+    z = x+y
+    msg = "Result is {}".format(z)
+    return [msg.encode('ascii')]
 
 urls = [
     ("/", render_home),
