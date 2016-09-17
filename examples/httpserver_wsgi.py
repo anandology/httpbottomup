@@ -2,13 +2,14 @@
 
 USAGE:
 
-    from httpserver_wsgi import start_server
-
+    # hello.py
     def application(environ, start_response):
         start_response("200 OK", [("Content-type": "text/plain")])
         return [b'Hello World!']
 
-    start_server('localhost', 8080, application)
+Run it using:
+
+    $ python httpserver_wsgi.py hello:application
 
 """
 import sys
@@ -94,3 +95,18 @@ def write_headers(sock, status, headers):
     header_bytes = b"".join(h.encode('ascii') + CRLF for h in header_items)
     sock.send(header_bytes)
     sock.send(CRLF)
+
+def main():
+    modname = sys.argv[1]
+    if ":" in modname:
+        modname, funcname = modname.split(":", 1)
+    else:
+        funcname = 'application'
+    module = __import__(modname)
+    app = getattr(module, funcname)
+    
+    start_server('localhost', 8000, app)
+
+
+if __name__ == "__main__":
+    main()
