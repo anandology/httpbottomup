@@ -6,6 +6,10 @@ def render_home():
     return open("../data/add.html").read()
 
 def render_add():
+    cookies = wwf.cookies()
+    count = int(cookies.get("counter", 0)) + 1
+    wwf.setcookie("counter", str(count))
+
     q = wwf.query()
     if 'x' not in q or 'y' not in q:
         wwf.set_status("404 Bad Data")
@@ -14,7 +18,7 @@ def render_add():
     y = int(q['y'])
     z = x+y
     wwf.add_header("Content-type", "text/plain")
-    msg = "Result is {}".format(z)
+    msg = "Result is {}\nCalled {} times.".format(z, count)
     return msg
 
 urls = [

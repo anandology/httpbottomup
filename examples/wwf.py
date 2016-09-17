@@ -77,3 +77,13 @@ def add_header(name, value):
 def notfound():
     return b'Not Found'
     
+def cookies():
+    """Returns the cookies as a dictionary.
+    """
+    cookie_str = request.headers.get("cookie")
+    parts = cookie_str.split(";")
+    pairs = [part.strip().split("=", 1) for part in parts if "=" in part]
+    return dict(pairs)
+
+def setcookie(name, value):
+    add_header("Set-Cookie", "{}={}".format(name, value))
