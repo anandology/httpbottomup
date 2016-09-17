@@ -3,6 +3,7 @@
 Write a function urlopen that takes an URL as argument and returns its contents.
 """
 
+import sys
 from socket import socket, AF_INET, SOCK_STREAM
 
 def urlopen(url):
@@ -84,3 +85,15 @@ def test_urlsplit():
 	assert urlsplit("http://google.com/search") == ('http', 'google.com', 80, '/search')
 	assert urlsplit("http://google.com:1234/search") == ('http', 'google.com', 1234, '/search')
 	assert urlsplit("http://google.com:1234/") == ('http', 'google.com', 1234, '/')
+
+def main():
+    url = sys.argv[1]
+    response = urlopen(url)
+    print(response.status, response.reason)
+    for name, value in response.headers:
+        print(name + ": " + value)
+    print()
+    print(response.body.decode('ascii'))
+
+if __name__ == "__main__":
+    main()
