@@ -15,3 +15,6 @@ def application(environ, start_response):
     start_response("200 OK", [("Content-Type", "text/plain")])
     return [b"Hello World\n"]
 
+if __name__ == "__main__":
+    from httpserver_wsgi import start_server
+    start_server("localhost", 8000, application)

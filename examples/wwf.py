@@ -80,7 +80,7 @@ def notfound():
 def cookies():
     """Returns the cookies as a dictionary.
     """
-    cookie_str = request.headers.get("cookie")
+    cookie_str = request.headers.get("cookie", "")
     parts = cookie_str.split(";")
     pairs = [part.strip().split("=", 1) for part in parts if "=" in part]
     return dict(pairs)

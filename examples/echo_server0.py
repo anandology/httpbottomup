@@ -7,10 +7,9 @@ def echo_server(host, port):
     sock.bind((host, port))
     sock.listen(1)
     
-    while True:
-        print("waiting to accept connections on", host, port) 
-        client_sock, client_addr = sock.accept()
-        handle_client(client_sock, client_addr)
+    print("listening on", host, port) 
+    client_sock, client_addr = sock.accept()
+    handle_client(client_sock, client_addr)
 
 def handle_client(client_sock, client_addr):
     print("New connection from", client_addr)
@@ -24,7 +23,10 @@ def handle_client(client_sock, client_addr):
     client_sock.close()
 
 def main():
-    port = int(sys.argv[1])
+    try:
+        port = int(sys.argv[1])
+    except IOError:
+        port = 8000
     echo_server('localhost', port)
 
 if __name__ == "__main__":

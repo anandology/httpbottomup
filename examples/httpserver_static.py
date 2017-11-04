@@ -4,6 +4,9 @@ import httpserver
 import os.path
 
 def handle_request(method, path, headers):
+    if '?' in path:
+        path, qs = path.split("?", 1)
+    print("Query String:", qs)
     document_root = "."
     filepath = document_root + path
     print(filepath)
